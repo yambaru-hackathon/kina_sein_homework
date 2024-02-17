@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'count_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,54 +17,87 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
+    return ChangeNotifierProvider(
+      create: (_) => CountModel(),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        ),
+        body: const Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'You have pushed the button this many times:',
+              ),
+              Count(),
+            ],
+          ),
+        ),
+        floatingActionButton: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Builder(
+                builder: (context) {
+                  final model = context.read<CountModel>();
+                  return FloatingActionButton(
+                    onPressed: () {
+                      model.leftIncrementCounter();
+                    },
+                    tooltip: 'Increment',
+                    child: const Icon(Icons.add),
+                  );
+                },
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Builder(
+                builder: (context) {
+                  final model = context.watch<CountModel>();
+                  return FloatingActionButton(
+                    onPressed: () {
+                      model.switchToggle();
+                    },
+                    tooltip: 'Increment',
+                    backgroundColor: model.toggle ? Colors.blue : null,
+                    child: const Text('Toggle'),
+                  );
+                },
+              ),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+    );
+  }
+}
+
+class Count extends StatelessWidget {
+  const Count({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final counter = context.select<CountModel, int>(
+      (CountModel model) => model.counter,
+    );
+
+    return Text(
+      '$counter',
+      style: const TextStyle(
+        fontSize: 28,
       ),
     );
   }
