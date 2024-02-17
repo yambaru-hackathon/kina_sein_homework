@@ -81,10 +81,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   context: context,
                   builder: (BuildContext cntext) {
                     return AlertDialog(
-                      title: Text("本当に消しますか？"),
+                      title: const Text("本当に消しますか？"),
                       actions: <Widget>[
                         GestureDetector(
-                          child: Text(
+                          child: const Text(
                             'はい',
                             style: TextStyle(fontSize: 20)
                           ),
@@ -94,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           },
                         ),
                         GestureDetector(
-                          child: Text(
+                          child: const Text(
                             'いいえ',
                             style: TextStyle(fontSize: 20)
                           ),
@@ -114,8 +114,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 context: context,
                 builder: (BuildContext cntext) {
                   return AlertDialog(
-                    title: Text("Select Year"),
-                    content: Container(
+                    title: const Text("Select Year"),
+                    content: SizedBox(
                       width: 300,
                       height: 300,
                       child: YearPicker(
@@ -152,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _goToAddPage() async {
     await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AddPage()),
+      MaterialPageRoute(builder: (context) => const AddPage()),
     );
     _fetchFirebaseData();
   }

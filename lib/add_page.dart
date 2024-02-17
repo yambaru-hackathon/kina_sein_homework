@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'firebase_options.dart';
-
-import 'user.dart';
 
 class AddPage extends StatefulWidget {
-  AddPage({super.key});
+  const AddPage({super.key});
 
   @override
   State<AddPage> createState() => _AddPageState();
@@ -49,7 +45,7 @@ class _AddPageState extends State<AddPage> {
         child: Column(
           children: [
             TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'First',
               ),
               onChanged: (text) {
@@ -57,7 +53,7 @@ class _AddPageState extends State<AddPage> {
               },
             ),
             TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'last',
               ),
               onChanged: (text) {
@@ -66,23 +62,23 @@ class _AddPageState extends State<AddPage> {
             ),
             Row(
               children: [
-                Text('born'),
-                SizedBox(width: 10),
+                const Text('born'),
+                const SizedBox(width: 10),
                 Text(
                   '$born',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 ElevatedButton(
                   onPressed: () {
                     showDialog(
                       context: context,
                       builder: (BuildContext cntext) {
                         return AlertDialog(
-                          title: Text("Select Year"),
-                          content: Container(
+                          title: const Text("Select Year"),
+                          content: SizedBox(
                             width: 300,
                             height: 300,
                             child: YearPicker(
@@ -102,7 +98,7 @@ class _AddPageState extends State<AddPage> {
                       },
                     );
                   },
-                  child: Text('選択'),
+                  child: const Text('選択'),
                 ),
               ],
             ),
@@ -111,7 +107,7 @@ class _AddPageState extends State<AddPage> {
                 await _addToFirebase();
                 Navigator.pop(context);
               },
-              child: Text('追加する'),
+              child: const Text('追加する'),
             ),
           ],
         ),
