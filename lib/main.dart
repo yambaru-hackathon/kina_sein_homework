@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'count_model.dart';
 
+bool color = false;
+
 void main() {
   runApp(const MyApp());
 }
@@ -33,7 +35,7 @@ class MyHomePage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         ),
-        body: const Center(
+        body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -70,6 +72,7 @@ class MyHomePage extends StatelessWidget {
                   return FloatingActionButton(
                     onPressed: () {
                       model.switchToggle();
+                      color = !color;
                     },
                     tooltip: 'Increment',
                     backgroundColor: model.toggle ? Colors.blue : null,
@@ -96,8 +99,10 @@ class Count extends StatelessWidget {
 
     return Text(
       '$counter',
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 28,
+        // model.counter以外の変数は更新されない
+        color: color ? Colors.blue : Colors.black,
       ),
     );
   }
